@@ -1,0 +1,1 @@
+"Expt1_PART2.asm" SET (SMALL) DEBUG PRINT(.\Listings\Expt1_PART2.lst) OBJECT(.\Objects\Expt1_PART2.obj) EP

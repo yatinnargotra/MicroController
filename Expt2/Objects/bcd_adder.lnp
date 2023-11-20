@@ -1,0 +1,3 @@
+".\Objects\ASCII_counter.obj" 
+TO ".\Objects\bcd_adder" 
+PRINT(".\Listings\bcd_adder.m51") RAMSIZE(256) 

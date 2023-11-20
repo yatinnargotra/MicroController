@@ -1,0 +1,3 @@
+".\Objects\Stepper_Motor.obj" 
+TO ".\Objects\Expt4" 
+PRINT(".\Listings\Expt4.m51") RAMSIZE(256) 

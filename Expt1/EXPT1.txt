@@ -1,0 +1,19 @@
+Write an asembly level program to transfer block of ten memory location to the given other location
+	1.transfer memory block starting from 20H to memory starting from 40H
+	2.transfer memory block starting from 20H to memory starting from 25H
+
+MOV A,#05H - Moves immediate value to accumulator
+MOV A,05H - Moves the value at the location 05H
+MOV A,@R0 - Moves contents of R0 to accumulator
+INC R0 - Increments the value of R0 by one 
+DEC R0 - Decrements the value of R0 by one 
+DJNZ reg,label - It is one of the conditional jump statements, It states that Decrement Jump to location 
+
+Algorithm:
+1.Start the code. ORG 00H
+2.Set the conter. 
+3.Set the initial memory address from the blocks.
+4.Move the contents. 
+5.Point to the next address from both the blocks. 
+6.Repeat Step 3 for the counter times.
+7.End
