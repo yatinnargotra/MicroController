@@ -1,0 +1,86 @@
+#include<p18f4550.h>
+
+// Declare the _startup function as an external function
+extern void _startup(void);
+
+// Function prototype for the timer ISR (Interrupt Service Routine)
+void timer_isr(void);
+
+// Specify the location of the reset vector
+#pragma code RESET_INTERRUPT_VECTOR = 0x1000
+
+// Reset vector function
+void _reset(void)
+{
+    _asm
+        // Jump to the _startup function
+        goto _startup
+    _endasm
+}
+
+#pragma code
+
+// Main function
+void main()
+{
+    // Configure ADC for digital I/O
+    ADCON1 = 0x0F;
+
+    // Disable PORTB pull-ups
+    INTCON2bits.RBPU = 0;
+
+    // Configure RB0 as an output
+    TRISBbits.TRISB0 = 0;
+
+    // Initialize PORTB0 to 0
+    PORTBbits.RB0 = 0;
+
+    // Configure Timer0
+    T0CON = 0x03;
+    TMR0H = 0x6D;
+    TMR0H = 0x26;
+
+    // Clear Timer0 interrupt flag
+    INTCONbits.TMR0IF = 0;
+
+    // Enable Timer0 interrupt
+    INTCONbits.TMR0IE = 1;
+
+    // Enable global interrupts
+    INTCONbits.GIE = 1;
+
+    // Start Timer0
+    T0CONbits.TMR0ON = 1;
+
+    // Infinite loop to keep the program running
+    while(1);
+}
+
+// Specify the location of the high-priority interrupt vector
+#pragma code HIGH_INTERRUPT_VECTOR = 0x1008
+
+// High-priority interrupt vector function
+void high_ISR(void)
+{
+    _asm
+        // Jump to the timer_isr function
+        goto timer_isr
+    _endasm
+}
+
+#pragma code
+
+// Interrupt service routine for Timer0
+#pragma interrupt timer_isr
+void timer_isr(void)
+{
+    // Reload Timer0 with initial values
+    TMR0H = 0x6D;
+    TMR0L = 0x26;
+
+    // Toggle the state of RB0 (LED or output pin)
+    PORTBbits.RB0 = ~PORTBbits.RB0;
+
+    // Clear Timer0 interrupt flag
+    INTCONbits.TMR0IF = 0;
+}
